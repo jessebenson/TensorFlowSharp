@@ -476,8 +476,6 @@ class OpGenerator
 
 	public static void Main (string [] args)
 	{
-		if (Marshal.SizeOf (typeof (IntPtr)) != 8)
-			throw new Exception ("Need to run in 64");
 		new OpGenerator ().Run ();
 	}
 }
