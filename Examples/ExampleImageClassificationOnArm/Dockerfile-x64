@@ -1,0 +1,12 @@
+FROM microsoft/dotnet:2.0.0-sdk-stretch AS build
+
+WORKDIR /src
+COPY ./ ./
+RUN dotnet publish
+
+FROM microsoft/dotnet:2.0.0-runtime-stretch
+
+WORKDIR /app
+COPY --from=build /src/bin/Debug/netcoreapp2.0/publish/ /app
+
+CMD ["dotnet", "ExampleImageClassificationOnArm.dll"]
