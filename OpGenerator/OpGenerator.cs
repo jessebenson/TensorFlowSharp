@@ -637,8 +637,6 @@ class OpGenerator
 
 	public static void Main (string [] args)
 	{
-		if (Marshal.SizeOf (typeof (IntPtr)) != 8)
-			throw new Exception ("Need to run in 64");
 		if (args.Length == 0)
 			args = new string [] { "/cvs/tensorflow/tensorflow/core/api_def/base_api" };
 		

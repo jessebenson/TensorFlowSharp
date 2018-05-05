@@ -45,8 +45,6 @@ namespace TensorFlow
 		public const string TensorFlowLibrary = "libtensorflow";
 
 		internal static string GetStr (this IntPtr x) => Marshal.PtrToStringAnsi (x);
-
-
 	}
 
 	/// <summary>
@@ -55,11 +53,6 @@ namespace TensorFlow
 	public static class TFCore {
 		[DllImport (NativeBinding.TensorFlowLibrary)]
 		static extern unsafe IntPtr TF_Version ();
-
-		static TFCore ()
-		{
-			CheckSize ();
-		}
 
 		/// <summary>
 		/// Returns the version of the TensorFlow runtime in use.
@@ -91,22 +84,6 @@ namespace TensorFlow
 		{
 			return new TFBuffer (TF_GetAllOpList ());
 		}
-
-		internal static void CheckSize ()
-		{
-			unsafe
-			{
-				if (sizeof (IntPtr) == 4) {
-					Console.Error.WriteLine (
-						"The TensorFlow native libraries were compiled in 64 bit mode, you must run in 64 bit mode\n" +
-						"With Mono, do that with mono --arch=64 executable.exe, if using an IDE like MonoDevelop,\n" +
-						"Xamarin Studio or Visual Studio for Mac, Build/Compiler settings, make sure that " +
-						"\"Platform Target\" has x64 selected.");
-					throw new Exception ();
-
-				}
-			}
-		}
 	}
 
 	/// <summary>
@@ -131,11 +108,6 @@ namespace TensorFlow
 		/// </summary>
 		/// <value>The handle.</value>
 		public IntPtr Handle => handle;
-
-		static TFDisposable ()
-		{
-			TFCore.CheckSize ();
-		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:TensorFlow.TFDisposable"/> class.
